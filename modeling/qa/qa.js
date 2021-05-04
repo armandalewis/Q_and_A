@@ -384,8 +384,8 @@ var cellMatch = function(qud, world) {
   return world[qud] == 'safe';
 };
 
-var rows = ['A', 'B', 'C'];
-var cols = ['1', '2', '3'];
+var rows = ['A', 'B', 'C','D'];
+var cols = ['1', '2', '3','4'];
 
 // Project down to subspace of location of card in question
 var spatialLocationQUD = function(qudName) {
@@ -587,3 +587,4 @@ module.exports = {
   capitalize: capitalize,
   orderIsEqual: orderIsEqual
 };
+
