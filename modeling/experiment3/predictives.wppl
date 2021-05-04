@@ -7,7 +7,7 @@ var getQuestionerPredictions = function(questionerType, bestQRationality, bestAR
     var rawState = JSON.parse(datum['gridState']);
     var state = {'safe' : sort(rawState['safe']),
 		 'unsafe' : sort(rawState['unsafe'])};
-    var goal = datum['goal'] == 'columns' ? ['1', '2', '3'] : ['A', 'B', 'C'];
+    var goal = datum['goal'] == 'columns' ? ['1', '2', '3','4'] : ['A', 'B', 'C','D'];
     var prediction = questioner(questionerType, goal, state);
     foreach(prediction.support(), function(s){
       var strippedQuestion = s.split('_')[1];
