@@ -32,7 +32,7 @@ function submit (event) {
   console.log(game.data);
   console.log(game.socket);
   game.socket.send("exitSurvey." + JSON.stringify(game.data));
-  if(_.size(game.urlParams) >= 4) {
+  if(_.size(game.urlParams) >= 4) {//AL I DONE THINK THIS SHOULD CHANGE
     window.opener.turk.submit(game.data, true);
     window.close(); 
   } else {
@@ -44,8 +44,8 @@ function submit (event) {
 function initBombMap(game) {
   // Add objects to grid
   console.log(game.fullMap);
-  _.forEach(['A','B','C'], (rowName, i) => {
-    _.forEach(_.range(1,4), (colName, j) => {
+  _.forEach(['A','B','C','D'], (rowName, i) => {
+    _.forEach(_.range(1,5), (colName, j) => {
       var underlying = game.fullMap[rowName + colName];
       var div = $('<div/>').css({position: 'relative'});
       if(underlying == 'x') {
@@ -76,8 +76,8 @@ function initBombMap(game) {
 
 // Add objects to grid
 function initGrid(game) {
-  _.forEach(['A','B','C'], (rowName, i) => {
-    _.forEach(_.range(1,4), (colName, j) => {
+  _.forEach(['A','B','C','D'], (rowName, i) => {
+    _.forEach(_.range(1,5), (colName, j) => {
       var underlying = game.fullMap[rowName + colName];
       var initialize = _.includes(game.revealedCells, rowName + colName);
       var div = $('<div/>').css({position: 'relative'});
