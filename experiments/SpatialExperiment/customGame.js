@@ -76,7 +76,8 @@ class ServerRefGame extends ServerGame {
       try {
 	code = getBestVal(possibilities)['question'];
       } catch(err) {
-	var cells = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'];
+          //expand grid
+	var cells = ['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'C4', 'D1', 'D2', 'D3', 'D4'];
 	code = _.sample(_.without(cells, state['safe'].concat(state['unsafe'])));
       } finally {
 	setTimeout(function() {
