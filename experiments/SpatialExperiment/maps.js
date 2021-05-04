@@ -5,10 +5,12 @@ class GameMap {
     this.trialType = trialInfo.trialType;
     this.goalType = trialInfo.goal;    
 
+      //expand the grid according to current setup (better to make this variable)
     this.labels = [
-      'A1', 'A2', 'A3',
-      'B1', 'B2', 'B3', 
-      'C1', 'C2', 'C3'
+      'A1', 'A2', 'A3', 'A4',
+      'B1', 'B2', 'B3', 'B4',
+      'C1', 'C2', 'C3', 'C4',
+      'D1', 'D2', 'D3', 'D4'    
     ];
 
     // Boards are equivalent w.r.t. reflection, so we 
@@ -46,25 +48,28 @@ class GameMap {
   // We pick 1 of the 3 rows to be initiated,
   // and then ensure that row has no bombs...
   samplePractice () {
-    const rowToReveal = _.sample([0,1,2]);
+    const rowToReveal = _.sample([0,1,2,3]);
     let initRevealed = this.allHidden();
     let underlying = this.allBombs();
     initRevealed[rowToReveal][0] = 'x';
-    initRevealed[rowToReveal][1] = 'x';    
+    initRevealed[rowToReveal][1] = 'x'; 
+    initRevealed[rowToReveal][2] = 'x'; 
     underlying[rowToReveal][0] = 'o';
     underlying[rowToReveal][1] = 'o';    
     underlying[rowToReveal][2] = 'o';
+    underlying[rowToReveal][3] = 'o';
     return (!this.validate(initRevealed, underlying) ? this.samplePractice() :
 	    this.sampleReflection(initRevealed, underlying));
   }
-
+//expand grid
   // For some spice, we randomly sample initializations and stuff
   sampleRandom () {
     let underlying = this.allBombs();
-    let clearRow = _.sample([0,1,2]);
+    let clearRow = _.sample([0,1,2,3]);
     underlying[clearRow][0] = 'o';
     underlying[clearRow][1] = 'o';    
     underlying[clearRow][2] = 'o';
+    underlying[clearRow][3] = 'o';
     
     let initRevealed = _.map(underlying, row => {
       return _.map(row, cell => {
@@ -77,42 +82,47 @@ class GameMap {
 	    this.sampleReflection(initRevealed, underlying));
 
   }
-
+//expand grid
   // We pick 1 cell to be initiated,
   // and then ensure that row has no bombs...
   samplePragmatic (blocked) {
-    const rowToReveal = _.sample([0,1,2]);
-    const colToReveal = _.sample([0,1,2]);
+    const rowToReveal = _.sample([0,1,2,3]);
+    const colToReveal = _.sample([0,1,2,3]);
     let initRevealed = this.allHidden();
     let underlying = this.allBombs();
     initRevealed[rowToReveal][colToReveal] = 'x';
     if(blocked) {
-      const colToBlock = _.sample(_.without([0,1,2], colToReveal));
-      const otherCol = _.sample(_.without([0,1,2], colToReveal, colToBlock)); 
+      const colToBlock = _.sample(_.without([0,1,2,3], colToReveal));
+      const otherCol = _.sample(_.without([0,1,2,3], colToReveal, colToBlock)); 
       underlying[rowToReveal][colToBlock] = 'x';
       underlying[rowToReveal][colToReveal] = 'o';    
       underlying[rowToReveal][otherCol] = 'o';
+      underlying[rowToReveal][otherCol] = 'o';
       // But ensure this row is safe...
-      const otherRow = _.sample(_.without([0,1,2], rowToReveal));
+      const otherRow = _.sample(_.without([0,1,2,3], rowToReveal));
       underlying[otherRow][0] = 'o';
       underlying[otherRow][1] = 'o';    
       underlying[otherRow][2] = 'o';
+      underlying[otherRow][3] = 'o';
     } else {
       underlying[rowToReveal][0] = 'o';
       underlying[rowToReveal][1] = 'o';    
       underlying[rowToReveal][2] = 'o';
+      underlying[rowToReveal][3] = 'o';
     }
     return (!this.validate(initRevealed, underlying) ? this.samplePragmatic(blocked) :
 	    this.sampleReflection(initRevealed, underlying));
   }
   
+    //expand grid
   sampleEmpty () {
     let initRevealed = this.allHidden();
     let underlying = this.allBombs();
-    const rowToBeOkay = _.sample([0,1,2]);
+    const rowToBeOkay = _.sample([0,1,2,3]);
     underlying[rowToBeOkay][0] = 'o';
     underlying[rowToBeOkay][1] = 'o';    
     underlying[rowToBeOkay][2] = 'o';
+    underlying[rowToBeOkay][3] = 'o';
     return (!this.validate(initRevealed, underlying) ? this.sampleEmpty() :
 	    this.sampleReflection(initRevealed, underlying));
   }
@@ -140,12 +150,13 @@ class GameMap {
   allRevealed(grid) {
     return this.completeRow(grid, 'x') || this.completeRow(this.rotate(grid), 'x');
   }
-  
+  //expand grid
   allHidden() {
     return [
-      ['o' ,'o', 'o'],
-      ['o', 'o', 'o'],
-      ['o', 'o', 'o']
+      ['o' ,'o', 'o','o'],
+      ['o', 'o', 'o','o'],
+      ['o', 'o', 'o','o'],
+      ['o', 'o', 'o','o']
     ];
   }
   
@@ -153,7 +164,8 @@ class GameMap {
     return [
       [this.bomb(), this.bomb(), this.bomb()],
       [this.bomb(), this.bomb(), this.bomb()],
-      [this.bomb(), this.bomb(), this.bomb()]
+      [this.bomb(), this.bomb(), this.bomb()],
+      [this.bomb(), this.bomb(), this.bomb()] 
     ];
   }
   
