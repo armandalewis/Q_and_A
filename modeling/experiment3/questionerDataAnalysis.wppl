@@ -29,10 +29,10 @@ var runAnalysis = function() {
       var rawState = JSON.parse(response['gridState']);
       var state = {'safe' : sort(rawState['safe']),
 		   'unsafe' : sort(rawState['unsafe'])};
-      var goal = response['goal'] == 'columns' ? ['1', '2', '3'] : ['A', 'B', 'C'];
+      var goal = response['goal'] == 'columns' ? ['1', '2', '3','4'] : ['A', 'B', 'C','D'];
       var prediction = Infer({method: 'enumerate'}, function() {
 	var guess = flip(.1);
-	return guess ? sample(Categorical({vs: ['is_A1_safe?', 'is_A2_safe?', 'is_A3_safe?', 'is_B1_safe?', 'is_B2_safe?', 'is_B3_safe?', 'is_C1_safe?', 'is_C2_safe?', 'is_C3_safe?']})) : sample(questioner(questionerType, goal, state));
+	return guess ? sample(Categorical({vs: ['is_A1_safe?', 'is_A2_safe?', 'is_A3_safe?', 'is_A4_safe?', 'is_B1_safe?', 'is_B2_safe?', 'is_B3_safe?', 'is_B4_safe?', 'is_C1_safe?', 'is_C2_safe?', 'is_C3_safe?', 'is_C4_safe?', 'is_D1_safe?', 'is_D2_safe?', 'is_D3_safe?', 'is_D4_safe?']})) : sample(questioner(questionerType, goal, state));
       });
       var score = prediction.score('is_' + response['question'] + '_safe?');
       globalStore.score += score;
@@ -75,10 +75,10 @@ var runAIS = function(questionerType) {
       var rawState = JSON.parse(response['gridState']);
       var state = {'safe' : sort(rawState['safe']),
 		   'unsafe' : sort(rawState['unsafe'])};
-      var goal = response['goal'] == 'columns' ? ['1', '2', '3'] : ['A', 'B', 'C'];
+      var goal = response['goal'] == 'columns' ? ['1', '2', '3','4'] : ['A', 'B', 'C','D'];
       var prediction = Infer({method: 'enumerate'}, function() {
 	var guess = flip(.05);
-	return guess ? sample(Categorical({vs: ['is_A1_safe?', 'is_A2_safe?', 'is_A3_safe?', 'is_B1_safe?', 'is_B2_safe?', 'is_B3_safe?', 'is_C1_safe?', 'is_C2_safe?', 'is_C3_safe?']})) : sample(questioner(questionerType, goal, state));
+	return guess ? sample(Categorical({vs: ['is_A1_safe?', 'is_A2_safe?', 'is_A3_safe?', 'is_A4_safe?', 'is_B1_safe?', 'is_B2_safe?', 'is_B3_safe?', 'is_B4_safe?', 'is_C1_safe?', 'is_C2_safe?', 'is_C3_safe?', 'is_C4_safe?', 'is_D1_safe?', 'is_D2_safe?', 'is_D3_safe?', 'is_D4_safe?']})) : sample(questioner(questionerType, goal, state));
       });
       var score = prediction.score('is_' + response['question'] + '_safe?');
       globalStore.score += score;
@@ -116,7 +116,7 @@ var findBlockedParams = function(questionerType) {
       var rawState = JSON.parse(response['gridState']);
       var state = {'safe' : sort(rawState['safe']),
 		   'unsafe' : sort(rawState['unsafe'])};
-      var goal = response['goal'] == 'columns' ? ['1', '2', '3'] : ['A', 'B', 'C'];
+      var goal = response['goal'] == 'columns' ? ['1', '2', '3','4'] : ['A', 'B', 'C','D'];
       var prediction = questioner(questionerType, goal, state);
       var score = prediction.score('is_' + response['question'] + '_safe?');
       globalStore.score += score;
