@@ -193,7 +193,8 @@ var customEvents = function(game) {
     var completeCol = _.map(_.range(1,4), colName => {
       return _.filter(revealedCells, cellName => cellName[1] == colName);
     });
-    var completeRow = _.map(['A','B','C'], rowName => {
+      //expand grid
+    var completeRow = _.map(['A','B','C','D'], rowName => {
       return _.filter(revealedCells, cellName => cellName[0] == rowName);
     });
     
@@ -203,8 +204,8 @@ var customEvents = function(game) {
 	game.socket.emit('endRound', {outcome: 'fail'});
 	$('.pressable').off('click');
 	game.roundOver = true;
-      } else if (goal == 'rows' && _.some(completeRow, row => row.length == 3) ||
-		 goal == 'columns' && _.some(completeCol, col => col.length == 3)) {
+      } else if (goal == 'rows' && _.some(completeRow, row => row.length == 4) ||
+		 goal == 'columns' && _.some(completeCol, col => col.length == 4)) {
 	console.log('success');
 	game.socket.emit('endRound', {outcome: 'success'});
 	$('.pressable').off('click');
