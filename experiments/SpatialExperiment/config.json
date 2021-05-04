@@ -12,8 +12,8 @@
     "role2" : "helper"
   },
   "numRounds" : 20,
-  "numHorizontalCells" : 4,
-  "numVerticalCells" : 4,
+  "numHorizontalCells" : 5,
+  "numVerticalCells" : 5,
   "cellDimensions" : {
     "height" : 300,
     "width" : 300
